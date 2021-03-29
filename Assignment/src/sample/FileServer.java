@@ -11,62 +11,44 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Vector;
+import java.util.ArrayList;
 
-public class Main extends Application {
+public class FileServer{
     protected Socket clientSocket           = null;
     protected ServerSocket serverSocket     = null;
     protected int numClients                = 0;
-    protected Vector messages               = new Vector();
+    protected ClientConnectionHandler[] threads = null;
+    protected ArrayList<File> commands     = new ArrayList<File>();
 
     public static int SERVER_PORT = 16789;
     public static int MAX_CLIENTS = 25;
 
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Assignment 2: File Sharing System");
-        Scene scene = new Scene(new VBox());
-        primaryStage.setWidth(615);
-        primaryStage.setHeight(500);
-
+    public FileServer(){
         try{
-            
+            serverSocket = new ServerSocket(SERVER_PORT);
+            System.out.println("---------------------------");
+            System.out.println("File Server Application is running");
+            System.out.println("---------------------------");
+            System.out.println("Listening to port: "+SERVER_PORT);
+            threads = new ClientConnectionHandler[MAX_CLIENTS];
+            while(true) {
+                clientSocket = serverSocket.accept();
+                System.out.println("Client #"+(numClients+1)+" connected.");
+                threads[numClients] = new ClientConnectionHandler(clientSocket, commands);
+                threads[numClients].start();
+                numClients++;
+            }
+        } catch (IOException e) {
+            System.err.println("IOException while creating server connection");
         }
-
-        SplitPane pane = new SplitPane();
-        TableView leftTable = new TableView();
-        leftTable.setEditable(true);
-        TableColumn firstCol = new TableColumn();
-        firstCol.setMinWidth(300);
-        leftTable.getColumns().addAll(firstCol);
-        TableView rightTable = new TableView();
-        leftTable.setEditable(true);
-        TableColumn secondCol = new TableColumn();
-        firstCol.setMinWidth(300);
-        rightTable.getColumns().add(secondCol);
-        pane.getItems().addAll(leftTable, rightTable);
-
-        Button btn = new Button("Download");
-        Button btn2 = new Button("Upload");
-        HBox hbBtn = new HBox(10);
-        hbBtn.getChildren().addAll(btn, btn2);
-
-        ((VBox) scene.getRoot()).getChildren().add(hbBtn);
-        ((VBox) scene.getRoot()).getChildren().add(pane);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-
-
     }
 
-
     public static void main(String[] args) {
-        launch(args);
+        FileServer app = new FileServer();
     }
 }
