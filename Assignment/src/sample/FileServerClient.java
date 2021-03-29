@@ -12,6 +12,7 @@ public class FileServerClient {
     private PrintWriter out = null;
     private PrintWriter networkOut = null;
     private BufferedReader networkIn = null;
+    private File localFolder = null;
 
     //we can read this from the user too
     public static String SERVER_ADDRESS = "localhost";

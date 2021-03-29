@@ -27,8 +27,7 @@ public class ClientConnectionHandler extends Thread {
 
         boolean endOfSession = false;
         while (!endOfSession) {
-            System.out.println("Hi");
-            endOfSession = true;
+            endOfSession = true; //place holder for event
         }
         try {
             socket.close();
