@@ -33,7 +33,9 @@ public class Main extends Application {
         primaryStage.setWidth(615);
         primaryStage.setHeight(500);
 
-
+        try{
+            
+        }
 
         SplitPane pane = new SplitPane();
         TableView leftTable = new TableView();
