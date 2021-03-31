@@ -2,9 +2,6 @@ package sample;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
-import java.awt.event.*;
-import java.awt.*;
 
 public class FileServerClient {
     private Socket socket = null;
@@ -44,9 +41,8 @@ public class FileServerClient {
         }
     }
 
-
-
     public static void main(String[] args){
+        ClientUiOpener.launchWithArgs(args); //opens the ui in static class
         FileServerClient client = new FileServerClient();
     }
 }
