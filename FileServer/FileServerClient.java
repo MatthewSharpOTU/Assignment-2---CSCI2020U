@@ -1,12 +1,18 @@
 //package sample;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.awt.event.*;
 import java.awt.*;
 
-public class FileServerClient extends Frame {
+public class FileServerClient extends Frame{
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter networkOut = null;
@@ -56,7 +62,7 @@ public class FileServerClient extends Frame {
 
     }
 
-    // Logcin function
+    // Login function
     protected boolean login() {
         String input = null;
         File files = null;
@@ -199,7 +205,7 @@ public class FileServerClient extends Frame {
             System.err.println("Error reading from socket.");
         }
         String strID = message.substring(message.indexOf(':')+1);
-        id = (new Integer(strID.trim())).intValue();
+        id = Integer.parseInt(strID.trim());
         for (int i = 0; i <= id; i++) {
             networkOut.println("GETMSG "+i);
             try {
@@ -216,7 +222,9 @@ public class FileServerClient extends Frame {
     public void downloadFile(){
         
 	}
+
     public static void main(String[] args) {
-        FileServerClient client = new FileServerClient();
+        ClientUiOpener.launchWithArgs(args);
+        //FileServerClient client = new FileServerClient();
     }
 }
