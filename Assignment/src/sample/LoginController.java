@@ -2,13 +2,11 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,12 +32,12 @@ public class LoginController {
         //opens up the main client ui window and closes this login window
         Stage mainStage = (Stage) textField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("clientUi.fxml"));
-        mainStage.setScene(loader.load());
+        mainStage.setScene(new Scene(loader.load()));
 
         //passes client directory to table view
         MainClientUiController controller = loader.getController();
         controller.initData(clientFile);
-        
+
         //anything like setting up a list of files should be done in the MainClientUiController.initialize()
     }
 
