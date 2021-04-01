@@ -58,7 +58,7 @@ public class MainClientUiController {
 
     //methods are set up to be called when ever the buttons are pressed
     public void uploadFile() {
-        System.out.println("hi - upload");
+        //System.out.println("hi - upload");
         String selectedString = clientListView.getSelectionModel().getSelectedItem();
         if (selectedString == null){
             warnUser();
@@ -67,15 +67,21 @@ public class MainClientUiController {
 
         File[] content = clientFile.listFiles();
         FileServerClient client = new FileServerClient();
-        for (File files : content){
-            if (files.getName().equalsIgnoreCase(selectedString)){
-                client.fileUpload(files); // uploads files
-                client.logout();
+        if (content!=null) {
+            for (File files : content) {
+                if (files.getName().equalsIgnoreCase(selectedString)) {
+                    client.fileUpload(files); // uploads files
+                    client.logout();
+
+                    //client just adds file to server view disregarding whether the upload success or failed
+                    ObservableList<String> serverList = serverListView.getItems();
+                    serverList.add(selectedString);
+                }
             }
         }
     }
     public void downloadFile(){
-        System.out.println("hi - download");
+        //System.out.println("hi - download");
         String selectedString = serverListView.getSelectionModel().getSelectedItem();
         if (selectedString == null){
             warnUser();
@@ -89,6 +95,8 @@ public class MainClientUiController {
             e.printStackTrace();
         }
         client.logout();
+        ObservableList<String> clientList = clientListView.getItems();
+
         try {
             File downloadedFile = new File(clientFile+"/"+selectedString); // sets up file in current directory
             downloadedFile.createNewFile();
@@ -97,12 +105,9 @@ public class MainClientUiController {
                 fileOutput.println(line); // writes into the new downloaded file
             }
             fileOutput.close();
+            clientList.add(downloadedFile.getName());
         } catch (IOException e) {
             System.err.println("There was an issue reading the file");
         }
-
-
-
-        System.out.println("Just here to silent warnings");
     }
 }
