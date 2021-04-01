@@ -58,7 +58,6 @@ public class MainClientUiController {
 
     //methods are set up to be called when ever the buttons are pressed
     public void uploadFile() {
-        //System.out.println("hi - upload");
         String selectedString = clientListView.getSelectionModel().getSelectedItem();
         if (selectedString == null){
             warnUser();
@@ -67,21 +66,25 @@ public class MainClientUiController {
 
         File[] content = clientFile.listFiles();
         FileServerClient client = new FileServerClient();
+        String[] serverFilesList = null;
         if (content!=null) {
             for (File files : content) {
                 if (files.getName().equalsIgnoreCase(selectedString)) {
                     client.fileUpload(files); // uploads files
+                    serverFilesList = client.getDIR();
                     client.logout();
-
-                    //client just adds file to server view disregarding whether the upload success or failed
-                    ObservableList<String> serverList = serverListView.getItems();
-                    serverList.add(selectedString);
                 }
             }
         }
+
+        //clears and updates server view after upload
+        ObservableList<String> serverList = serverListView.getItems();
+        serverList.clear();
+        if (serverFilesList!=null){
+            serverList.addAll(Arrays.asList(serverFilesList));
+        }
     }
     public void downloadFile(){
-        //System.out.println("hi - download");
         String selectedString = serverListView.getSelectionModel().getSelectedItem();
         if (selectedString == null){
             warnUser();
@@ -105,9 +108,17 @@ public class MainClientUiController {
                 fileOutput.println(line); // writes into the new downloaded file
             }
             fileOutput.close();
-            clientList.add(downloadedFile.getName());
         } catch (IOException e) {
             System.err.println("There was an issue reading the file");
+        }
+
+        //clears and updates client view after download
+        clientList.clear();
+        File[] content = clientFile.listFiles();
+        if (content!=null){
+            for (File file: content){
+                clientList.add(file.getName());
+            }
         }
     }
 }
