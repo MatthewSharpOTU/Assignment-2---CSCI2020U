@@ -68,6 +68,12 @@ public class ClientConnectionHandler extends Thread {
         } else if (command.equalsIgnoreCase("UPLOAD")) {
             synchronized(this){
                 File argument = new File(args);
+                for (int i = 0; i<files.size(); i++){
+                    if (files.get(i).getName().equalsIgnoreCase(args)){
+                        files.set(i, argument);
+                        return false;
+                    }
+                }
                 files.add(argument);
             }
             out.println("200 Message Sent");
