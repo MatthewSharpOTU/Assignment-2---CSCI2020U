@@ -31,8 +31,7 @@ public class FileServerClient {
         }
     }
 
-    public String[] getDIR() {
-        String[] serverFiles = null;
+    protected String[] getDIR() {
         String length = null;
         int id = -1;
         networkOut.println("LEN");
@@ -41,21 +40,23 @@ public class FileServerClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(length);
         id = (new Integer(length)).intValue();
-        for (int i = 0; i<id; i++){
-            networkOut.println("DIR " + i);
+        String[] serverFiles = new String[id];
+        int count = 0;
+        while (count < id){
+            networkOut.println("DIR "+count);
             try {
-                serverFiles[i] = networkIn.readLine();
-                System.out.println(serverFiles[i]);
+                length = networkIn.readLine();
             } catch (IOException e) {
                 System.err.println("Error reading from socket.");
             }
+            serverFiles[count] = length;
+            count++;
         }
         return serverFiles;
     }
 
-    public void logout(){
+    protected void logout(){
         networkOut.println("LOGOUT");
         try {
             socket.close();
@@ -65,12 +66,41 @@ public class FileServerClient {
         }
     }
 
+    protected void fileUpload(File upload){
+        String line = null;
+        networkOut.println("UPLOAD "+upload);
+        try {
+            line = networkIn.readLine();
+            System.out.println(line);
+        } catch (IOException e) {
+            System.err.println("Error reading from socket.");
+        }
+    }
+
+    protected String[] downloadFile(String selectedFile) throws IOException {
+        String message = null;
+        String[] line = null;
+        int id = -1;
+        networkOut.println("FILELEN "+ selectedFile);
+        try {
+            message = networkIn.readLine();
+        } catch (IOException e) {
+            System.err.println("Error reading from socket.");
+        }
+        id = (new Integer(message)).intValue();
+        line = new String[id];
+        for (int i = 0; i<id; i++){
+            networkOut.println("DOWNLOAD " + i);
+            try {
+                line[i] = networkIn.readLine();
+            } catch (IOException e) {
+                System.err.println("Error reading from socket.");
+            }
+        }
+        return line;
+    }
+
     public static void main(String[] args){
-        /*
-        FileServerClient client = new FileServerClient();
-        String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
-        client.logout();
-         */
         ClientUiOpener.launchWithArgs(args); //opens the ui in static class
     }
 }

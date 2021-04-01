@@ -8,6 +8,7 @@ public class ClientConnectionHandler extends Thread {
     protected PrintWriter out = null;
     protected BufferedReader in = null;
     protected ArrayList<File> files = null;
+    protected File stored = null;
 
     public ClientConnectionHandler(Socket socket, ArrayList<File> files) {
         super();
@@ -51,30 +52,73 @@ public class ClientConnectionHandler extends Thread {
         if (st.hasMoreTokens()) {
             args = message.substring(command.length()+1, message.length());
         }
+        System.out.println(args);
         return processCommand(command, args);
     }
 
     protected Boolean processCommand(String command, String args) {
         if (command.equalsIgnoreCase("DIR")){
             int id = (new Integer(args)).intValue();
+            System.out.println(id);
             if (id < files.size()){
                 String sharedFile = files.get(id).getName();
+                System.out.println(files.size() + " " + id);
                 out.println(sharedFile);
             } else {
                 out.println("400 Message Does Not Exist");
             }
             return true;
         } else if (command.equalsIgnoreCase("UPLOAD")) {
+            synchronized(this){
+                File argument = new File(args);
+                files.add(argument);
+            }
             out.println("200 Message Sent");
             return false;
         } else if (command.equalsIgnoreCase("DOWNLOAD")) {
-            out.println("200 Message Sent");
+            int id = (new Integer(args)).intValue();
+            String line = null;
+            try {
+                FileReader fileInput = new FileReader(stored);
+                BufferedReader input = new BufferedReader(fileInput);
+                for (int i = 0; i<=id; i++){
+                    line = input.readLine();
+                    System.out.println(line);
+                }
+                out.println(line);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return false;
         } else if (command.equalsIgnoreCase("LOGOUT")){
             out.println("200 Client Logged Out");
             return true;
         } else if (command.equalsIgnoreCase("LEN")){
-            out.println((files.size()-1));
+            out.println((files.size()));
+            return false;
+        } else if (command.equalsIgnoreCase("FILELEN")){
+            int id = 0;
+            stored = null;
+            String line = null;
+            for (int i = 0; i<files.size(); i++){
+                if (files.get(i).getName().equalsIgnoreCase(args)){
+                    stored = files.get(i);
+                }
+            }
+            try {
+                FileReader fileInput = new FileReader(stored);
+                BufferedReader input = new BufferedReader(fileInput);
+                while((line = input.readLine())!=null){
+                    id++;
+                }
+                out.println(id);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return false;
         }
         else {
