@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.layout.HBox?>
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="sample.LoginController" vgap="20"
+          prefHeight="300" prefWidth="400" styleClass="simpleDark" alignment="CENTER">
+    <!-- Applying Style Sheet -->
+    <stylesheets>
+        <URL value="@Design.css" />
+    </stylesheets>
+
+    <!-- User Login Ui -->
+    <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" alignment="CENTER">
+        <Label text="Welcome to File Sharer 4000" styleClass="simpleDarkTitle"/>
+    </HBox>
+    <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" alignment="CENTER">
+        <Label text="Username: " alignment="BOTTOM_CENTER" styleClass="simpleDark"/>
+        <TextField promptText="Input Here" fx:id="textField" styleClass="simpleGrey"/>
+    </HBox>
+    <HBox GridPane.rowIndex="3" GridPane.columnIndex="0" alignment="CENTER" spacing="10">
+        <Label text="Client Directory: " prefWidth="130" alignment="BOTTOM_RIGHT" styleClass="simpleDark"/>
+        <Label text="None" prefWidth="100" alignment="BOTTOM_CENTER" fx:id="clientDirDisplay" styleClass="simpleGrey"/>
+        <Button text="Select" styleClass="simpleDarkButton" onAction="#setClientDirectory"/>
+    </HBox>
+    <HBox GridPane.rowIndex="4" GridPane.columnIndex="0" alignment="CENTER">
+        <Button text="Login" prefWidth="200" prefHeight="10" styleClass="simpleDarkButton" onAction="#LoginWithUsername"/>
+    </HBox>
+</GridPane>

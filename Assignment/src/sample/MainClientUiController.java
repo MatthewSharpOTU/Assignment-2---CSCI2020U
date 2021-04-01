@@ -21,13 +21,18 @@ public class MainClientUiController {
     //method used for passing client file dir
     public void initData(File clientFile){
         this.clientFile = clientFile;
+        File[] content = clientFile.listFiles(); // Stores the Files within the local directory
+
+        FileServerClient client = new FileServerClient();
+        String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
+        client.logout();
     }
 
     //methods are set up to be called when ever the buttons are pressed
     public void uploadFile() {
-
+        System.out.println("hi - upload");
     }
     public void downloadFile(){
-
+        System.out.println("hi - download");
     }
 }

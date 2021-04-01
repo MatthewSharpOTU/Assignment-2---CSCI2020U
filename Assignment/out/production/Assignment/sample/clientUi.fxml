@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<BorderPane fx:controller="sample.MainClientUiController" xmlns:fx="http://javafx.com/fxml" styleClass="simpleDark">
+    <!-- Applying Style Sheet -->
+    <stylesheets>
+        <URL value="@Design.css" />
+    </stylesheets>
+
+    <!-- Client Ui -->
+    <top>
+        <VBox styleClass="vBoxPadding">
+            <HBox styleClass="buttonsPadding" spacing="10">
+                <Button text="Download" styleClass="simpleDarkButton" fx:id="uploadButton" onAction="#uploadFile"/>
+                <Button text="Upload" styleClass="simpleDarkButton" fx:id="downloadButton" onAction="#downloadFile"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50">
+                <Label text="Client" alignment="CENTER" styleClass="labelStyle" prefWidth="200"/>
+                <Label text="Server" alignment="CENTER" styleClass="labelStyle" prefWidth="200"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane>
+            <ListView fx:id="clientListView" styleClass="simpleDark">
+
+            </ListView>
+            <ListView fx:id="serverListView" styleClass="simpleDark">
+
+            </ListView>
+        </SplitPane>
+    </center>
+</BorderPane>

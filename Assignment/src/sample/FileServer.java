@@ -25,7 +25,7 @@ public class FileServer{
     protected ArrayList<File> commands     = new ArrayList<File>();
 
     public static int SERVER_PORT = 16789;
-    public static int MAX_CLIENTS = 25;
+    public static int MAX_CLIENTS = 50;
 
 
     public FileServer(){
@@ -38,7 +38,7 @@ public class FileServer{
             threads = new ClientConnectionHandler[MAX_CLIENTS];
             while(true) {
                 clientSocket = serverSocket.accept();
-                System.out.println("Client #"+(numClients+1)+" connected.");
+                System.out.println("File Sharing Client connected.");
                 threads[numClients] = new ClientConnectionHandler(clientSocket, commands);
                 threads[numClients].start();
                 numClients++;

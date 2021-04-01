@@ -31,11 +31,38 @@ public class FileServerClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public String[] getDIR() {
+        String[] serverFiles = null;
+        String length = null;
+        networkOut.println("LEN");
+        int id = -1;
+        try {
+            length = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        id = (new Integer(length)).intValue();
+        for (int i = 0; i<=id; i++){
+            networkOut.println("DIR " + i);
+            try {
+                serverFiles[i] = networkIn.readLine();
+                System.out.println(serverFiles[i]);
+            } catch (IOException e) {
+                System.err.println("Error reading from socket.");
+            }
+        }
+        return serverFiles;
+    }
+
+    public void logout(){
+        networkOut.println("LOGOUT");
         try {
             in.close();
             out.close();
             socket.close();
+            System.out.println("Connection has been closed");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,6 +70,5 @@ public class FileServerClient {
 
     public static void main(String[] args){
         ClientUiOpener.launchWithArgs(args); //opens the ui in static class
-        FileServerClient client = new FileServerClient();
     }
 }
