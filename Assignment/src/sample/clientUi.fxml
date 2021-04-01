@@ -26,10 +26,10 @@
     </top>
     <center>
         <SplitPane>
-            <ListView fx:id="clientListView" styleClass="simpleDark">
+            <ListView fx:id="clientListView" styleClass="simpleDarkList">
 
             </ListView>
-            <ListView fx:id="serverListView" styleClass="simpleDark">
+            <ListView fx:id="serverListView" styleClass="simpleDarkList">
 
             </ListView>
         </SplitPane>

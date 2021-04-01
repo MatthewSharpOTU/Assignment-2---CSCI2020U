@@ -46,3 +46,10 @@
     -fx-background-insets: 0,1,2,0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+
+.simpleDarkList{
+    -fx-background-color: #303030;
+    -fx-text-color: #EAEAEA;
+    -fx-text-fill: #EAEAEA;
+    -fx-font-size: 12pt;
+}

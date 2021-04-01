@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane prefHeight="150.0" prefWidth="400.0" styleClass="simpleDark">
+    <!-- Applying Style Sheet -->
+    <stylesheets>
+        <URL value="@Design.css" />
+    </stylesheets>
+
+    <!-- Client Ui -->
+    <center>
+        <Label text="Please select a file to perform the action" styleClass="simpleDark"/>
+    </center>
+</BorderPane>

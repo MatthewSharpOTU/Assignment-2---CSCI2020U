@@ -43,7 +43,9 @@ public class LoginController {
 
     public void setClientDirectory(){
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("."));
         clientFile = directoryChooser.showDialog(textField.getScene().getWindow());
+        if (clientFile == null){return;}
         if (clientFile.isDirectory()){
             clientDirDisplay.setText(clientFile.getName());
         }else{
