@@ -26,6 +26,7 @@ public class MainClientUiController {
         FileServerClient client = new FileServerClient();
         String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
         client.logout();
+        System.out.println(serverFilesList);
     }
 
     //methods are set up to be called when ever the buttons are pressed

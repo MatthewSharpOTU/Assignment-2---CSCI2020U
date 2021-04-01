@@ -37,7 +37,6 @@ public class LoginController {
         //passes client directory Mto table view
         MainClientUiController controller = loader.getController();
         controller.initData(clientFile);
-        //System.out.println("Hi - 1");
 
         //anything like setting up a list of files should be done in the MainClientUiController.initialize()
     }

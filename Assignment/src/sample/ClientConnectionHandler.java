@@ -23,8 +23,6 @@ public class ClientConnectionHandler extends Thread {
 
     public void run() {
         // initialize interaction
-        out.println("Connected to File Server");
-
         Boolean endOfConnection = false;
         while (!endOfConnection) {
             endOfConnection = processCommand();
@@ -41,7 +39,8 @@ public class ClientConnectionHandler extends Thread {
         try{
             message = in.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error reading command from socket.");
+            return true;
         }
         if (null == message){
             return true;
@@ -61,20 +60,25 @@ public class ClientConnectionHandler extends Thread {
             if (id < files.size()){
                 String sharedFile = files.get(id).getName();
                 out.println(sharedFile);
+            } else {
+                out.println("400 Message Does Not Exist");
             }
-            return false;
+            return true;
         } else if (command.equalsIgnoreCase("UPLOAD")) {
+            out.println("200 Message Sent");
             return false;
         } else if (command.equalsIgnoreCase("DOWNLOAD")) {
+            out.println("200 Message Sent");
             return false;
         } else if (command.equalsIgnoreCase("LOGOUT")){
-            out.println("Client Logged Out");
+            out.println("200 Client Logged Out");
             return true;
         } else if (command.equalsIgnoreCase("LEN")){
-            out.println(files.size()-1);
+            out.println((files.size()-1));
             return false;
         }
         else {
+            out.println("400 Unrecognized Command: "+command);
             return false;
         }
     }

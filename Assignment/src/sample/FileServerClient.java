@@ -24,27 +24,26 @@ public class FileServerClient {
             System.err.println("IOException while connecting to server: "+SERVER_ADDRESS);
         }
         try {
-            in = new BufferedReader(new InputStreamReader(System.in));
-            out = new PrintWriter(socket.getOutputStream());
             networkOut = new PrintWriter(socket.getOutputStream(), true);
             networkIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("IOException while opening a read/write connection");
         }
     }
 
     public String[] getDIR() {
         String[] serverFiles = null;
         String length = null;
-        networkOut.println("LEN");
         int id = -1;
+        networkOut.println("LEN");
         try {
-            length = in.readLine();
+            length = networkIn.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(length);
         id = (new Integer(length)).intValue();
-        for (int i = 0; i<=id; i++){
+        for (int i = 0; i<id; i++){
             networkOut.println("DIR " + i);
             try {
                 serverFiles[i] = networkIn.readLine();
@@ -59,8 +58,6 @@ public class FileServerClient {
     public void logout(){
         networkOut.println("LOGOUT");
         try {
-            in.close();
-            out.close();
             socket.close();
             System.out.println("Connection has been closed");
         } catch (IOException e) {
@@ -69,6 +66,11 @@ public class FileServerClient {
     }
 
     public static void main(String[] args){
+        /*
+        FileServerClient client = new FileServerClient();
+        String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
+        client.logout();
+         */
         ClientUiOpener.launchWithArgs(args); //opens the ui in static class
     }
 }
