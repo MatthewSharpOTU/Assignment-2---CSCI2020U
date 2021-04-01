@@ -52,22 +52,19 @@ public class ClientConnectionHandler extends Thread {
         if (st.hasMoreTokens()) {
             args = message.substring(command.length()+1, message.length());
         }
-        System.out.println(args);
         return processCommand(command, args);
     }
 
     protected Boolean processCommand(String command, String args) {
         if (command.equalsIgnoreCase("DIR")){
             int id = (new Integer(args)).intValue();
-            System.out.println(id);
             if (id < files.size()){
                 String sharedFile = files.get(id).getName();
-                System.out.println(files.size() + " " + id);
                 out.println(sharedFile);
             } else {
                 out.println("400 Message Does Not Exist");
             }
-            return true;
+            return false;
         } else if (command.equalsIgnoreCase("UPLOAD")) {
             synchronized(this){
                 File argument = new File(args);
@@ -83,7 +80,6 @@ public class ClientConnectionHandler extends Thread {
                 BufferedReader input = new BufferedReader(fileInput);
                 for (int i = 0; i<=id; i++){
                     line = input.readLine();
-                    System.out.println(line);
                 }
                 out.println(line);
             } catch (FileNotFoundException e) {
