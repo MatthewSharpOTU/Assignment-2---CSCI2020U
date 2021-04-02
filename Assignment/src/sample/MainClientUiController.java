@@ -32,6 +32,10 @@ public class MainClientUiController {
         String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
         client.logout();
 
+        for (String line : serverFilesList){
+            System.out.println(line);
+        }
+
         ObservableList<String> clientList = clientListView.getItems();
         if (content!=null){
             for (File file: content){

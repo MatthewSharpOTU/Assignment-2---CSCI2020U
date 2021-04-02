@@ -69,11 +69,14 @@ public class ClientConnectionHandler extends Thread {
             synchronized(this){
                 File argument = new File(args);
                 for (int i = 0; i<files.size(); i++){
-                    if (files.get(i).getName().equalsIgnoreCase(args)){
+                    if (files.get(i).getName().equals(argument.getName())){
+                        System.out.println("hi");
                         files.set(i, argument);
+                        out.println("200 Message Sent");
                         return false;
                     }
                 }
+                System.out.println("Hello");
                 files.add(argument);
             }
             out.println("200 Message Sent");
