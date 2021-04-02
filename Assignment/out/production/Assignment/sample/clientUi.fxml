@@ -15,8 +15,9 @@
     <top>
         <VBox styleClass="vBoxPadding">
             <HBox styleClass="buttonsPadding" spacing="10">
-                <Button text="Download" styleClass="simpleDarkButton" fx:id="uploadButton" onAction="#downloadFile"/>
-                <Button text="Upload" styleClass="simpleDarkButton" fx:id="downloadButton" onAction="#uploadFile"/>
+                <Button text="Download" styleClass="simpleDarkButton" onAction="#downloadFile"/>
+                <Button text="Upload" styleClass="simpleDarkButton" onAction="#uploadFile"/>
+                <Button text="View Client File" styleClass="simpleDarkButton" onAction="#viewFile"/>
             </HBox>
             <HBox alignment="CENTER" spacing="50">
                 <Label text="Client" alignment="CENTER" styleClass="labelStyle" prefWidth="200"/>
