@@ -4,16 +4,16 @@ Group Members: `Matthew Sharp - 100748071` and `Andy Wang - 100751519`
 
 This is a program that uses mutithreading to run server and client. sockets to access data from the server and the client
 When running server the output should appear text:
-![Alt text](/ServerIndication.png)
+<img src="/ServerIndication.png" width="800">
 
 When running client first the client will see:
-![Alt text](/LoginWindow.png)
+<img src="/LoginWindow.png" width="800">
 
 Then after loging in they will have access to the server:
-![Alt text](/ClientUi.png)
+<img src="/ClientUi.png" width="800">
 
 The simple FileViewer:
-![Alt text](/FileViewer.png)
+<img src="/FileViewer.png" width="800">
 
 Improvements:
 - UI: Custom style using css and fxml
