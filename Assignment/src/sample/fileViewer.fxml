@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+        prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <ScrollPane prefHeight="380" prefWidth="580">
+            <content>
+                <VBox alignment="TOP_LEFT" prefWidth="580" fx:id="vBox">
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

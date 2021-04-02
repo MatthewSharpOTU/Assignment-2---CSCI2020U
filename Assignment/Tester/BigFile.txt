@@ -1,0 +1,26 @@
+This
+is
+a long
+file made
+for testing the display
+of view file
+so that
+I can see
+if the FileViewer.fxml
+can easily
+display the
+correct style
+with the scrollbar
+on the
+right side
+or would
+this just
+simply
+get cut off the screen
+and there won't be
+any extra text
+or that the
+screen would
+get really stretched
+by the
+text file
