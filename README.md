@@ -2,7 +2,7 @@
 Assignment-2---CSCI2020U Assignment 2 Repository for System Development and Integration - CSCI2020U.
 Group Members: `Matthew Sharp - 100748071` and `Andy Wang - 100751519`
 
-This is a program that uses mutithreading and 
+This is a program that uses mutithreading to run server and client. sockets to access data from the server and the client
 When running server the output should appear text:
 ![Alt text](/ServerIndication.png)
 
@@ -20,7 +20,8 @@ Improvements:
 - UI: Login Ui for user
 - UI: Warn user when login has invalid values
 - UI: Warn users when performating upload or download when nothing is selected from the correct menu
-- Model: 
+- Model: Added File Viwer button to view files on client side
+- Model: File override, so no files are duplicated with the same name
 
 Instructions:
 - Using Intellij to run program:
