@@ -17,23 +17,28 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
-//this is the controller class that is connected to the main ui with the upload and download
+/**
+ * this is the controller class that is connected to the main ui with the upload and download
+ */
 public class MainClientUiController {
     @FXML ListView<String> clientListView; //you can change the type from String to anything you need
     @FXML ListView<String> serverListView;
 
-    File clientFile;
+    File clientFile; // client directory
 
-    //method used for passing client file dir
+    /**
+     * method used for passing client file dir
+     * @param clientFile - Client Directory
+     */
     public void initData(File clientFile){
-        this.clientFile = clientFile;
+        this.clientFile = clientFile; // sets client directory
         File[] content = clientFile.listFiles(); // Stores the Files within the local directory
 
-        FileServerClient client = new FileServerClient();
+        FileServerClient client = new FileServerClient(); //instantiates new connection
         String[] serverFilesList = client.getDIR(); // Stores the Files within the shared directory
-        client.logout();
+        client.logout(); // ends connection
 
-        for (String line : serverFilesList){
+        for (String line : serverFilesList){ // prints all server directory files
             System.out.println(line);
         }
 
@@ -50,6 +55,9 @@ public class MainClientUiController {
         }
     }
 
+    /**
+     * Displays a warning if download or upload is pressed with no file selected
+     */
     private void warnUser(){
         try {
             Stage secondaryStage = new Stage();
@@ -61,23 +69,25 @@ public class MainClientUiController {
         }
     }
 
-    //methods are set up to be called when ever the buttons are pressed
+    /**
+     * Method if the upload button is pressed
+     */
     public void uploadFile() {
-        String selectedString = clientListView.getSelectionModel().getSelectedItem();
-        if (selectedString == null){
+        String selectedString = clientListView.getSelectionModel().getSelectedItem(); //gets selected item
+        if (selectedString == null){ // conditional if selected item is null
             warnUser();
             return;
         }
 
-        File[] content = clientFile.listFiles();
-        FileServerClient client = new FileServerClient();
-        String[] serverFilesList = null;
+        File[] content = clientFile.listFiles(); // gets list of all client directory files
+        FileServerClient client = new FileServerClient(); // instantiates new connection
+        String[] serverFilesList = null; // used for the server files
         if (content!=null) {
-            for (File files : content) {
-                if (files.getName().equalsIgnoreCase(selectedString)) {
+            for (File files : content) { // for loop each file in the client directory
+                if (files.getName().equalsIgnoreCase(selectedString)) { // conditional for when the desired file is found
                     client.fileUpload(files); // uploads files
-                    serverFilesList = client.getDIR();
-                    client.logout();
+                    serverFilesList = client.getDIR(); // gets server directory files
+                    client.logout(); // ends connection
                 }
             }
         }
@@ -89,30 +99,34 @@ public class MainClientUiController {
             serverList.addAll(Arrays.asList(serverFilesList));
         }
     }
+
+    /**
+     * downloads the specified file from the shared directory
+     */
     public void downloadFile(){
-        String selectedString = serverListView.getSelectionModel().getSelectedItem();
-        if (selectedString == null){
+        String selectedString = serverListView.getSelectionModel().getSelectedItem(); // gets selected file
+        if (selectedString == null){ // conditional if the selected file is null
             warnUser();
             return;
         }
-        FileServerClient client = new FileServerClient();
-        String[] downloadedFileText = null;
+        FileServerClient client = new FileServerClient(); // instantiates new connection
+        String[] downloadedFileText = null; // used for retrieving file text
         try {
             downloadedFileText = client.downloadFile(selectedString); // retrieves file text
         } catch (IOException e) {
             e.printStackTrace();
         }
-        client.logout();
+        client.logout(); // ends connection
         ObservableList<String> clientList = clientListView.getItems();
 
         try {
             File downloadedFile = new File(clientFile+"/"+selectedString); // sets up file in current directory
-            downloadedFile.createNewFile();
+            downloadedFile.createNewFile(); // creates new file
             PrintWriter fileOutput = new PrintWriter(downloadedFile);
             for (String line : downloadedFileText){
                 fileOutput.println(line); // writes into the new downloaded file
             }
-            fileOutput.close();
+            fileOutput.close(); // closes file being written
         } catch (IOException e) {
             System.err.println("There was an issue reading the file");
         }
@@ -127,8 +141,11 @@ public class MainClientUiController {
         }
     }
 
+    /**
+     * Used to viewfile selected and display it
+     */
     public void viewFile(){
-        String selectedString = clientListView.getSelectionModel().getSelectedItem();
+        String selectedString = clientListView.getSelectionModel().getSelectedItem(); // Gets selected file
         if (selectedString == null){
             warnUser();
             return;
